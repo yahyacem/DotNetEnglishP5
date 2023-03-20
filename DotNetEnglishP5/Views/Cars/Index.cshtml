@@ -1,0 +1,157 @@
+﻿@model IEnumerable<DotNetEnglishP5.Models.CarViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="filter-bar mb-3">
+    <div class="left-items">
+        <a class="btn-primary fw-bold" asp-action="Create">Add new car</a>
+    </div>
+    <div class="right-items">
+        <button type="submit" id="btnDeleteCar" disabled class="btn-inactive squared"><img src="~/assets/svg/delete_FILL0_wght600_GRAD0_opsz48.svg" alt="Delete" /></button>
+    </div>
+</div>
+
+<table class="table cars-container overflow-hidden">
+    <thead>
+        <tr asp-action="Create">
+            <th>
+                <input id="checkSelectAll" title="Select all" type="checkbox" class="form-check-input"/>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VIN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Make)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchasePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Repairs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepairCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LotDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SellingPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaleDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <input data-id="@item.Id" value="@item.Id" title="Select car" type="checkbox" class="form-check-input checkSelectItem" />
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.VIN)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.Make)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+                <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.Trim)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.PurchaseDate)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.PurchasePrice)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.Repairs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepairCost)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.LotDate)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.SellingPrice)
+            </td>
+            <td onclick="location.href = '@Url.Action("Edit", "Cars", new { id = item.Id })'">
+                @Html.DisplayFor(modelItem => item.SaleDate)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<partial name="_Paging" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#checkSelectAll").change(function () {
+                if (this.checked) {
+                    $(".checkSelectItem").each(function() {
+                        $(this).prop("checked", true);
+                    });
+                } else {
+                    $(".checkSelectItem").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                }
+                UpdateDeleteButton();
+            });
+
+            $(".checkSelectItem").click(function (e) {
+                var checkAll = $(".checkSelectItem[type=checkbox]:checked").length === $(".checkSelectItem[type=checkbox]").length;
+                $("#checkSelectAll").prop("checked", checkAll);
+                UpdateDeleteButton();
+            });
+
+            UpdateDeleteButton();
+
+            function UpdateDeleteButton() {
+                var isAnyChecked = $(".checkSelectItem[type=checkbox]:checked").length > 0
+                $("#btnDeleteCar").prop("disabled", !isAnyChecked);
+            }
+
+            $("#btnDeleteCar").click(function() {
+                var idsToDelete = [];
+                $(".checkSelectItem[type=checkbox]:checked").each(function() {
+                    idsToDelete.push($(this).attr("data-id"));
+                })
+                var url = '@Url.Action("Delete", "Cars")?';
+                idsToDelete.forEach(function(element, index) {
+                    if (index !== 0) {
+                        url += '&'
+                    }
+                    url += 'id=' + element;
+                })
+                window.location = url;
+            })
+        });
+    </script>
+}

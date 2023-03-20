@@ -1,0 +1,121 @@
+﻿@font-face {
+    font-family: "Rajdhani";
+    src: url('../assets/fonts/Rajdhani/Rajdhani-Regular.ttf');
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Rajdhani";
+    src: url('../assets/fonts/Rajdhani/Rajdhani-Medium.ttf');
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Rajdhani";
+    src: url('../assets/fonts/Rajdhani/Rajdhani-Light.ttf');
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Rajdhani";
+    src: url('../assets/fonts/Rajdhani/Rajdhani-SemiBold.ttf');
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Rajdhani";
+    src: url('../assets/fonts/Rajdhani/Rajdhani-Bold.ttf');
+    font-weight: 700;
+}
+
+:root {
+    --color-1: #2E09A2;
+    --color-2: #461FD5;
+    --color-3: #707070;
+    --filter-color-1: invert(11%) sepia(59%) saturate(5979%) hue-rotate(255deg) brightness(88%) contrast(118%);
+    --filter-color-2: invert(12%) sepia(93%) saturate(5104%) hue-rotate(256deg) brightness(86%) contrast(102%);
+    --filter-color-3: invert(46%) sepia(0%) saturate(0%) hue-rotate(103deg) brightness(95%) contrast(91%);
+}
+
+body, .navbar {
+    background-color: #FAF8F8 !important;
+    font-family: "Rajdhani";
+}
+
+.navbar {
+    height: 75px;
+}
+
+.text-color-1 {
+    color: var(--color-1);
+}
+
+.text-color-2 {
+    color: var(--color-2);
+}
+
+.text-color-3 {
+    color: var(--color-3);
+}
+
+.fw-semibold {
+    font-weight: 600;
+}
+
+.navbar>.container-fluid {
+    padding: 0 30px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar>.container-fluid>.container-toggle {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+    font-size: 28px;
+    color: var(--color-1);
+    display: flex;
+    align-items: center;
+    align-content: center;
+    transition: transform 0.2s ease;
+}
+
+.navbar .navbar-brand:hover {
+    color: var(--color-1);
+    transform: scale(1.05);
+}
+
+.navbar .logo {
+    width: 30px;
+    margin-right: 5px;
+}
+
+.navbar-icon {
+    filter: var(--filter-color-3);
+    width: 30px;
+}
+
+.navbar-dropdown {
+    width: 15px;
+}
+
+.nav-item,
+.nav-item .nav-link,
+.nav-item a,
+.nav-item span,
+.nav-item img {
+    cursor: pointer;
+}
+
+.nav-link {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.nav-link:hover {
+    cursor: pointer !important;
+    transform: scale(1.1);
+}

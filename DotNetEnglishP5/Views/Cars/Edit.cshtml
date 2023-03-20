@@ -1,0 +1,280 @@
+﻿@model DotNetEnglishP5.Models.CarViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    List<SelectListItem> listMakes = new List<SelectListItem>();
+    if (ViewBag.Makes != null)
+    {
+        foreach(MakeViewModel make in ViewBag.Makes)
+        {
+            SelectListItem newItem = new SelectListItem()
+                    {
+                        Value = make.Name
+                    };
+            if (make.Name == Model.Make)
+            {
+                newItem.Selected = true;
+            }
+            listMakes.Add(newItem);
+        }
+    }
+
+    List<SelectListItem> listModels = new List<SelectListItem>();
+    if (ViewBag.Models != null)
+    {
+        foreach (ModelViewModel model in ViewBag.Models)
+        {
+            SelectListItem newItem = new SelectListItem()
+                    {
+                        Value = model.Name
+                    };
+            if (model.Name == Model.Model)
+            {
+                newItem.Selected = true;
+            }
+            listModels.Add(newItem);
+        }
+    }
+}
+
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="container my-2 box-container p-5">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <h3 class="mb-3 fw-semibold">Edit car</h3>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group py-2">
+                    <label asp-for="VIN" class="control-label"></label>
+                    <input asp-for="VIN" class="form-control" />
+                    <span asp-validation-for="VIN" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    @Html.LabelFor(model => model.Make, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.Make, new SelectList(listMakes, "Value", "Value", Model.Make), new { @class = "form-control form-dropdownlist", style = "width:100%" })
+                    <span asp-validation-for="Make" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    @Html.LabelFor(model => model.Model, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.Model, new SelectList(listModels, "Value", "Value", Model.Model), new { @class = "form-control form-dropdownlist", style = "width:100%" })
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="Trim" class="control-label"></label>
+                    <input asp-for="Trim" class="form-control" />
+                    <span asp-validation-for="Trim" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group py-2">
+                    <label asp-for="Year" class="control-label"></label>
+                    <input asp-for="Year" class="form-control" type="number" min="1990" max="@DateTime.Now.Year" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="PurchaseDate" class="control-label"></label>
+                    <input asp-for="PurchaseDate.Date" class="form-control" type="date" />
+                    <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="PurchasePrice" class="control-label"></label>
+                    <input asp-for="PurchasePrice" class="form-control" />
+                    <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="LotDate" class="control-label"></label>
+                    <input asp-for="LotDate.Value" class="form-control" type="date" />
+                    <span asp-validation-for="LotDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group py-2">
+                    <label asp-for="Repairs" class="control-label"></label>
+                    <input asp-for="Repairs" class="form-control" />
+                    <span asp-validation-for="Repairs" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="RepairCost" class="control-label"></label>
+                    <input asp-for="RepairCost" class="form-control" />
+                    <span asp-validation-for="RepairCost" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="SellingPrice" class="control-label"></label>
+                    <input asp-for="SellingPrice" class="form-control" />
+                    <span asp-validation-for="SellingPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="SaleDate" class="control-label"></label>
+                    <input asp-for="SaleDate.Value" class="form-control" type="date" />
+                    <span asp-validation-for="SaleDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group py-2">
+                    <label asp-for="Images" class="control-label"></label>
+                    <div class="image-container">
+                        <div class="row gx-2">
+                            @for (int i = 0; i < 4; i++)
+                            {
+                                var src = new object();
+                                if (Model != null && Model.Images != null)
+                                {
+                                    if (Model.Images.ElementAtOrDefault(i) != null)
+                                    {
+
+                                        var base64 = Convert.ToBase64String(Model.Images[i].Data);
+                                        src = String.Format("data:image/gif;base64,{0}", base64);
+                                    }
+                                    else
+                                    {
+                                        src = "/assets/png/no-photo-available.png";
+                                    }
+                                } else
+                                {
+                                    src = "/assets/png/no-photo-available.png";
+                                }
+
+                                var id = "image-" + (i + 1).ToString();
+                                if (i == 0)
+                                {
+                                    <img id="@id" src="@src" class="car-image col-12 mb-2 p-1 d-block" alt="Main image" />
+                                }
+                                else
+                                {
+                                    <img id="@id" src="@src" class="car-image col-4" alt="Small image" />
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="my-2">
+                        <button type="button" id="btn-file-import" class="btn-file-import btn-primary px-3 py-1 fw-bold mb-2 col-12">Upload images</button>
+                        <button type="button" id="btn-reset-file-import" class="btn-reset-file-import btn-secondary px-3 py-1 fw-bold col-12" >Clear</button>
+                        @Html.Hidden("ImagesChanged", false)
+                        <input asp-for="ImagesInput" class="form-control visually-hidden" id="ImagesInput" multiple accept="image/png, image/jpeg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="text-end mt-4">
+                <div class="form-group d-inline-block">
+                    <a asp-action="Index" class="btn btn-secondary fw-bolder px-5">Cancel</a>
+                </div>
+                <div class="form-group d-inline-block">
+                    <input type="submit" value="Update" class="btn btn-primary fw-bolder px-5" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript">
+            $(document).ready(function () {
+
+                $(function () {
+                    $("#Make").select2({
+                        tags: true
+                    });
+                    $("#Model").select2({
+                        tags: true
+                    });
+
+                    SetDropdownData();
+                });
+
+                $("#Make").change(function() {
+                    SetDropdownData();
+                });
+
+                function SetDropdownData() {
+                    var makeSelected = $("#Make").val();
+                    var modelSelected = $("#Model").val();
+                    var listModels = JSON.parse('@Html.Raw(Json.Serialize(ViewBag.Models))');
+                    var listModelsToShow = makeSelected === null ?
+                    listModels.map(function (m) {
+                        return { id: m.name, text: m.name }
+                    }) :
+                    listModels.filter(m => m.make.name === makeSelected).map(function (m) {
+                        return { id: m.name, text: m.name }
+                    });
+
+                    var option = new Option(listModelsToShow.name, listModelsToShow.name, true, true);
+                    if ($('#Model').data('select2')) {
+                        $('#Model').select2().empty();
+                        $('#Model').select2({
+                            data: listModelsToShow,
+                            placeholder: "-- MODEL --",
+                            tags: true
+                        });
+                    }
+
+                    if (listModelsToShow.find(m => m.id === modelSelected)) {
+                        $('#Model').val(modelSelected).trigger('change');
+                    } else {
+                    $('#Model').val(null).trigger('change');
+                    }
+                }
+
+                $("#btn-file-import").click(function () {
+                    $("#ImagesChanged").val(true);
+                    $("#ImagesInput").click();
+                })
+
+                $("#btn-reset-file-import").click(function () {
+                    $("#ImagesChanged").val(true);
+                    $("#ImagesInput").val("");
+
+                    var $img = $(".car-image");
+                    for (var i = 0; i < $($img).length; i++) {
+                        $img[i].src = "/assets/png/no-photo-available.png";
+                    }
+                })
+
+                $("#ImagesInput").on("change", function (e) {
+
+                    if (this.files) {
+                        var filesAmount = this.files.length;
+
+                        var $img = $(".car-image");
+                        for (var i = 0; i < $($img).length; i++) {
+                            $img[i].src = "/assets/png/no-photo-available.png";
+                        }
+
+                        if (this.files.length > 4) {
+                            alert("You can select only 4 images");
+                            $("#ImagesInput").val('');
+                            return;
+                        }
+
+                        for (i = 0; i < filesAmount; i++) {
+                            var ext = this.files[i].name.split('.').pop().toLowerCase();
+                            if ($.inArray(ext, ['png', 'jpg', 'jpeg']) == -1) {
+                                alert('Invalid type of file !');
+                                return;
+                            }
+                        }
+
+                        for (i = 0; i < filesAmount; i++) {
+
+                            var reader = new FileReader();
+
+                            reader.onload = (function (index) {
+                                return function (event) {
+                                    $img[index].src = event.target.result;
+                                }
+                            })(i);
+                            reader.readAsDataURL(this.files[i]);
+                        }
+                    }
+                });
+
+            })
+    </script>
+}

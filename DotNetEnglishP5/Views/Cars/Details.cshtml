@@ -1,0 +1,148 @@
+﻿@model DotNetEnglishP5.Models.CarViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="mt-4">
+    <h3 class="my-4 fw-semibold">Car details</h3>
+    <div class="container">
+        <div class="row">
+            <dl class="col-md-6">
+                <dd class="image-container">
+                    <div class="row gx-2">
+                        @for (int i = 0; i < 4; i++)
+                        {
+                            var src = new object();
+                            if (Model != null && Model.Images != null)
+                            {
+                                if (Model.Images.ElementAtOrDefault(i) != null)
+                                {
+
+                                    var base64 = Convert.ToBase64String(Model.Images[i].Data);
+                                    src = String.Format("data:image/gif;base64,{0}", base64);
+                                }
+                                else
+                                {
+                                    src = "/assets/png/no-photo-available.png";
+                                }
+                            }
+                            else
+                            {
+                                src = "/assets/png/no-photo-available.png";
+                            }
+
+                            var id = "image-" + (i + 1).ToString();
+                            if (i == 0)
+                            {
+                                <img id="@id" src="@src" class="car-image col-12 mb-2 p-1 d-block" alt="Main image" />
+                            }
+                            else
+                            {
+                                <img id="@id" src="@src" class="car-image col-4" alt="Small image" />
+                            }
+                        }
+                    </div>
+                </dd>
+            </dl>
+            <div class="col-md-6">
+                <div class="row container">
+                    @if (Model != null && Model.Sold)
+                    {
+                        <h2 class="sold-stamp-title fw-bolder">SOLD</h2>
+                    }
+                </div>
+                <dl class="row container">
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.VIN)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.VIN)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Make)
+                        </dt>
+                        <dd">
+                            @Html.DisplayFor(model => model.Make)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Model)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Model)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Trim)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Trim)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PurchaseDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PurchaseDate)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PurchasePrice)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PurchasePrice)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Repairs)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Repairs)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RepairCost)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RepairCost)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LotDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LotDate)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.SellingPrice)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.SellingPrice)
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.SaleDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.SaleDate)
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+﻿@model IEnumerable<DotNetEnglishP5.Models.CarViewModel>
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3 class="my-3" >Are you sure you want to delete these?</h3>
+<div>
+    <table class="table cars-container">
+        <thead>
+            <tr asp-action="Create">
+                <th>
+                    @Html.DisplayNameFor(model => model.VIN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Make)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trim)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchaseDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Repairs)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RepairCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LotDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SellingPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SaleDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Make)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Trim)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchasePrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Repairs)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RepairCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LotDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SellingPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaleDate)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    <form asp-action="Delete">
+        @foreach(var item in Model)
+        {
+            <input type="hidden" value="@item.Id" name="id" />
+        }
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

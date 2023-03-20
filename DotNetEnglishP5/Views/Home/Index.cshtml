@@ -1,0 +1,162 @@
+﻿@using DotNetEnglishP5.Data;
+@using DotNetEnglishP5.Models;
+@using X.PagedList.Mvc;
+@model X.PagedList.IPagedList<DotNetEnglishP5.Models.CarViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    List<SelectListItem> listMakes = new List<SelectListItem>();
+    if (ViewBag.Makes != null)
+    {
+        foreach (MakeViewModel make in ViewBag.Makes)
+        {
+            SelectListItem newItem = new SelectListItem()
+                    {
+                        Value = make.Name
+                    };
+            listMakes.Add(newItem);
+        }
+    }
+
+    List<SelectListItem> listModels = new List<SelectListItem>();
+    if (ViewBag.Models != null)
+    {
+        foreach (ModelViewModel model in ViewBag.Models)
+        {
+            SelectListItem newItem = new SelectListItem()
+                    {
+                        Value = model.Name
+                    };
+            listModels.Add(newItem);
+        }
+    }
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "filter-bar mb-3" }))
+{
+    <div class="left-items col-md-8">
+        <div class="form-group col-md-4">
+            @Html.DropDownList("Make", new SelectList(listMakes, "Value", "Value"), ViewBag.makeFilter, new { @class = "form-control form-dropdownlist", style = "width:100%", placeholder = "Make" , Name = "make"})
+        </div>
+        <div class="form-group col-md-4">
+            @Html.DropDownList("Model", new SelectList(listModels, "Value", "Value"), ViewBag.modelFilter, new { @class = "form-control form-dropdownlist", style = "width:100%", placeholder = "Model", Name = "model" })
+        </div>
+    </div>
+    <div class="right-items">
+        <button class="btn-primary fw-bold" type="submit">Search</button>
+    </div>
+}
+
+@if (Model.Count() > 0)
+{
+    <div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            var imgToShow = "/assets/png/no-photo-available.png";
+            if (item.Images != null && item.Images.Count > 0)
+            {
+                var base64 = Convert.ToBase64String(item.Images[0].Data);
+                imgToShow = String.Format("data:image/gif;base64,{0}", base64);
+            }
+
+            <div class="col">
+                <a class="card h-100" href="@Url.Action("Details", "Cars", new { id = item.Id }, null)">
+                    <img src="@imgToShow" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div class="left-items">
+                            <div>
+                                <h5 class="card-title">@item.Make</h5>
+                                <h5 class="card-title-small">@item.Model</h5>
+                                <h5 class="card-title-small">@item.Trim</h5>
+                            </div>
+                            <p class="card-text">@item.Year</p>
+                        </div>
+                        <div class="right-items">
+                            <h5>@item.SellingPrice.ToString("C")</h5>
+                            @if (item.Sold)
+                            {
+                                <img alt="Sold" class="card-stamp" src="~/assets/png/sold-stamp.png" />
+                            }
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+    <partial name="_Paging" />
+    @*<p>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </p>*@
+} else {
+    <div class="container text-center homepage-title">
+        <h1>There are no cars available at the moment.</h1>
+        <h3>Please, come back again later.</h3>
+    </div>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function () {
+                $("#Make").select2({
+                    tags: false,
+                    allowClear: true,
+                    placeholder: "Select a make"
+                });
+                $("#Model").select2({
+                    tags: false,
+                    allowClear: true,
+                    placeholder: "Select a model"
+                });
+
+                SetDropdownData();
+
+                console.log('@ViewBag.MakeFilter')
+                console.log('@ViewBag.ModelFilter')
+
+                $("#Make").val('@ViewBag.MakeFilter').trigger('change');
+                $("#Model").val('@ViewBag.ModelFilter').trigger('change');
+            });
+
+            
+
+            $("#Make").change(function () {
+                SetDropdownData();
+            });
+
+            function SetDropdownData() {
+                var makeSelected = $("#Make").val();
+                var modelSelected = $("#Model").val();
+                var listModels = JSON.parse('@Html.Raw(Json.Serialize(ViewBag.Models))');
+                var listModelsToShow = makeSelected === null || makeSelected === '' ? 
+                listModels.map(function (m) {
+                    return { id: m.name, text: m.name }
+                }) :
+                listModels.filter(m => m.make.name === makeSelected).map(function (m) {
+                    return { id: m.name, text: m.name }
+                });
+
+                var option = new Option(listModelsToShow.name, listModelsToShow.name, true, true);
+                if ($('#Model').data('select2')) {
+                    $('#Model').select2().empty();
+                    $('#Model').select2({
+                        data: listModelsToShow,
+                        tags: false,
+                        allowClear: true,
+                        placeholder: "Select a model"
+                    });
+                }
+
+                if (listModelsToShow.find(m => m.id === modelSelected)) {
+                    $('#Model').val(modelSelected).trigger('change');
+                } else {
+                    $('#Model').val(null).trigger('change');
+                }
+            }
+        })
+    </script>
+}

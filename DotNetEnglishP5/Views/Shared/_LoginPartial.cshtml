@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    @*<li class="nav-item">
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>*@
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="@Url.Action("Index", "Cars")">
+            <img class="navbar-icon" alt="Inventory icon" src="~/assets/svg/inventory_2_FILL0_wght600_GRAD0_opsz48.svg" />
+        </a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link text-dark dropdown-toggle" href="#" id="dropdownMenuLogout" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="navbar-icon" alt="Account icon" src="~/assets/svg/account_circle_FILL0_wght600_GRAD0_opsz48.svg" />
+            <span>@User.Identity?.Name</span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLogout">
+            <li>
+                
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                    <button type="submit" class="dropdown-item">Logout</button>
+                </form>
+                @*<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logout</a>*@
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    @*<li class="nav-item">
+            <a class="nav-link text-dark" href="@Url.Action("Index", "Cars")">
+                <img class="navbar-icon" src="~/assets/svg/inventory_2_FILL0_wght600_GRAD0_opsz48.svg" />
+        </a>
+    </li>*@
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                <img class="navbar-icon" src="~/assets/svg/account_circle_FILL0_wght600_GRAD0_opsz48.svg" />
+            </a>
+    </li>
+}
+</ul>
