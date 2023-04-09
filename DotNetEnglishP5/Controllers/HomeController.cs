@@ -19,27 +19,33 @@ namespace DotNetEnglishP5.Controllers
             _makeService = makeService;
             _modelService = modelService;
         }
-
+        // GET: /
         public async Task<IActionResult> Index(string? make, string? model, int? page)
         {
+            // Get cars, makes and models
             IEnumerable<CarViewModel> cars = await _carService.GetAllCarsAsync();
             var listMakes = await _makeService.GetAllMakesAsync();
             var listModels = await _modelService.GetAllModelsAsync();
+
+            // Pass list of makes and models into ViewBag to use it on razor page
             ViewBag.Makes = listMakes;
             ViewBag.Models = listModels;
 
+            // Filter by make
             if (!String.IsNullOrEmpty(make))
             {
                 cars = cars.Where(s => s.Make.Contains(make));
                 ViewBag.makeFilter = listMakes.Any(m => m.Name == make) ? make : null;
             }
 
+            // Filter by model
             if (!String.IsNullOrEmpty(model))
             {
                 cars = cars.Where(s => s.Model.Contains(model));
                 ViewBag.modelFilter = listModels.Any(m => m.Name == model) ? model : null;
             }
             
+            // Setup pagination
             int pageSize = 8;
             int pageNumber = (page ?? 1);
             return View(cars.ToPagedList(pageNumber, pageSize));

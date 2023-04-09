@@ -36,7 +36,6 @@ namespace DotNetEnglishP5.Controllers
         {
             var listCars = await _carService.GetAllCarsAsync();
 
-
             int pageSize = 8;
             int pageNumber = (page ?? 1);
             return listCars != null ?

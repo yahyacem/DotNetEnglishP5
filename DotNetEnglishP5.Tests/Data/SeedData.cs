@@ -67,7 +67,7 @@ namespace DotNetEnglishP5.Tests.Data
                         LotDate = DateTime.Now,
                         SellingPrice = 3000,
                         SaleDate = DateTime.Now
-                    }, 
+                    },
                     new Car()
                     {
                         Id = 3,
@@ -84,6 +84,30 @@ namespace DotNetEnglishP5.Tests.Data
                         },
                         Trim = null,
                         Year = 2013,
+                        PurchaseDate = DateTime.Now,
+                        PurchasePrice = 1500,
+                        Repairs = null,
+                        RepairCost = 500,
+                        LotDate = DateTime.Now,
+                        SellingPrice = 2500,
+                        SaleDate = DateTime.Now
+                    },
+                    new Car()
+                    {
+                        Id = 4,
+                        VIN = "087057878966",
+                        ModelId = 3,
+                        Model = new Model()
+                        {
+                            Name = "Mercedes",
+                            MakeId = 2,
+                            Make = new Make()
+                            {
+                                Name = "CLA 250"
+                            }
+                        },
+                        Trim = "AMG",
+                        Year = 2021,
                         PurchaseDate = DateTime.Now,
                         PurchasePrice = 1500,
                         Repairs = null,
@@ -180,7 +204,7 @@ namespace DotNetEnglishP5.Tests.Data
                 image1.Id = 2;
                 image2.CarId = 2;
                 var image3 = _mapper.Map<Image>(Helper.GetImageFromURL("Assets/JPEG/Audi-A3.jpeg"));
-                image1.Id = 13;
+                image1.Id = 3;
                 image3.CarId = 3;
                 var image4 = _mapper.Map<Image>(Helper.GetImageFromURL("Assets/JPEG/BMW-X1-1.jpeg"));
                 image1.Id = 4;
@@ -267,6 +291,27 @@ namespace DotNetEnglishP5.Tests.Data
                         Images = new List<ImageViewModel>()
                         {
                             images[5]
+                        }
+                    },
+                    new CarViewModel()
+                    {
+                        Id = 4,
+                        VIN = "4506546405045064",
+                        Make = "Mercedes",
+                        Model = "CLA 250",
+                        Trim = "AMG",
+                        Year = 2021,
+                        PurchaseDate = DateTime.Now,
+                        PurchasePrice = 1500,
+                        Repairs = null,
+                        RepairCost = 500,
+                        LotDate = DateTime.Now,
+                        SellingPrice = 2500,
+                        SaleDate = DateTime.Now,
+                        Images = new List<ImageViewModel>()
+                        {
+                            images[3],
+                            images[4]
                         }
                     }
                 };

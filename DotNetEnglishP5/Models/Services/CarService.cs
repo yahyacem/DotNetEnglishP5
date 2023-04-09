@@ -75,9 +75,11 @@ namespace DotNetEnglishP5.Models.Services
         }
         public async Task SaveCarAsync(CarViewModel car)
         {
+            // Get make and model of new car
             var model = await _modelRepository.GetByNameAsync(car.Model, car.Make);
             var make = await _makeRepository.GetByNameAsync(car.Make);
 
+            // Check if make and model exist, if not, create them
             if (model == null || object.Equals(model, default(Model)))
             {
                 var modelToAdd = new Model()
@@ -94,12 +96,14 @@ namespace DotNetEnglishP5.Models.Services
                 model = await _modelRepository.GetByNameAsync(car.Model);
             };
 
+            // Add car
             var carToAdd = _mapper.Map<CarViewModel, Car>(car, opt => opt.AfterMap((s, d) =>
             {
                 d.ModelId = model.Id;
             }));
             var carAdded = await _carRepository.SaveAsync(carToAdd);
 
+            // Add images of car
             if (carAdded != null && car.ImagesInput != null)
             {
                 foreach (IFormFile i in car.ImagesInput)
@@ -154,7 +158,7 @@ namespace DotNetEnglishP5.Models.Services
                 d.ModelId = model.Id;
             }));
 
-            // Updatte car
+            // Update car
             var carAdded = await _carRepository.UpdateAsync(carToAdd);
         }
         public async Task DeleteCarAsync(int id)

@@ -56,6 +56,7 @@ namespace DotNetEnglishP5.Models.Services
         {
             foreach (IFormFile i in images)
             {
+                // Get and set informations of file to upload
                 var fileName = Path.GetFileName(i.FileName);
                 var fileExtension = Path.GetExtension(fileName);
                 var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
@@ -67,12 +68,14 @@ namespace DotNetEnglishP5.Models.Services
                     FileType = fileExtension,
                 };
 
+                // Convert image data to byte[]
                 using (var target = new MemoryStream())
                 {
                     await i.CopyToAsync(target);
                     imageToAdd.Data = target.ToArray();
                 }
 
+                // Save image
                 await _imageRepository.SaveAsync(imageToAdd);
             }
         }

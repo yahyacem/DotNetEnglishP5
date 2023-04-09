@@ -1,0 +1,41 @@
+﻿<Properties StartupConfiguration="{5B7F00BB-64C1-48D7-AFBF-5BE324C6E549}|https">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.DotNetEnglishP5 PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DotNetEnglishP5" expanded="True">
+            <Node name="DotNetEnglishP5" expanded="True" />
+            <Node name="DotNetEnglishP5.Tests" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="DotNetEnglishP5" expanded="True" selected="True">
+            <Node name="DotNetEnglishP5.Tests" expanded="True">
+              <Node name="DotNetEnglishP5.Tests.Integration" expanded="True">
+                <Node name="CarServiceIntegrationTests" expanded="True" />
+                <Node name="ImageServiceIntegrationTests" expanded="True" />
+                <Node name="MakeServiceIntegrationTests" expanded="True" />
+                <Node name="ModelServiceIntegrationTests" expanded="True" />
+              </Node>
+              <Node name="DotNetEnglishP5.Tests.Unit" expanded="True">
+                <Node name="CarServiceUnitTests" expanded="True" />
+                <Node name="ImageServiceUnitTests" expanded="True" />
+                <Node name="MakeServiceUnitTests" expanded="True" />
+                <Node name="ModelServiceUnitTests" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

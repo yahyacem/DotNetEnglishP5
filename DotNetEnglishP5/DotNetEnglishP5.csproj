@@ -7,6 +7,8 @@
     <UserSecretsId>aspnet-DotNetEnglishP5-896c82dc-0842-4040-8e5e-6e5642cdcfab</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <Content Include="Assets\PNG\no-photo-available.png" />
   </ItemGroup>
